@@ -1,0 +1,33 @@
+{
+    "name"          : "dphp/i18n",
+    "version"       : "0.2.0",
+    "type"          : "library",
+    "description"   : "An i18n library by dPHP.",
+    "keywords"      : ["ddth", "dphp", "i18n"],
+    "homepage"      : "https://github.com/dphp/i18n",
+    "license"       : "LGPL-3.0+",
+    "authors"       : [
+        {
+            "name"      : "Thanh Ba Nguyen",
+            "email"     : "btnguyen2k@gmail.com",
+            "homepage"  : "https://github.com/btnguyen2k",
+            "role"      : "Developer, Project Founder"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "dphp/commons": ">=0.2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "dphp/composer-utils": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Dphp": "src/main/php/"
+        }
+    },
+    "scripts": {
+        "post-status-cmd": "\\Dphp\\ComposerUtils\\EclipsePdt::createPdt3Project"
+    }
+}
