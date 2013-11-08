@@ -1,6 +1,6 @@
 {
     "name"          : "dphp/i18n",
-    "version"       : "0.2.0",
+    "version"       : "0.1.0",
     "type"          : "library",
     "description"   : "An i18n library by dPHP.",
     "keywords"      : ["ddth", "dphp", "i18n"],
