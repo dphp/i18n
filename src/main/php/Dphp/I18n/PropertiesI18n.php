@@ -16,6 +16,9 @@
  */
 namespace Dphp\I18n;
 
+use Dphp\Commons\File;
+use Dphp\Commons\Properties;
+
 /**
  * {@link \Dphp\Commons\Properties}-based I18n pack.
  *
@@ -40,65 +43,52 @@ class PropertiesI18n extends AbstractI18n {
     const CONF_BASE_DIRECTORY = "i18n.baseDirectory";
     
     /**
-     *
-     * @var Ddth_Commons_Logging_ILog
-     */
-    private $LOGGER;
-    
-    /**
      * Constructs a new Ddth_Mls_FileLanguage object.
      */
     public function __construct() {
         parent::__construct ();
-        $this->LOGGER = Ddth_Commons_Logging_LogFactory::getLog ( __CLASS__ );
+        // $this->LOGGER = Ddth_Commons_Logging_LogFactory::getLog ( __CLASS__ );
     }
     
     /**
-     * This function loads language data from all {@link Ddth_Commons_Properties .
-     *
-     *
-     *
-     *
-     *
-     *
-     * properties files}
+     * This function loads language data from all {@link \Dphp\Commons\Properties properties files}
      * within the directory <i><baseDirectory>/<location></i>.
      *
-     * @see Ddth_Mls_AbstractLanguage::buildLanguageData()
-     * @see Ddth_Commons_Properties
+     * @see AbstractI18n::buildLanguageData()
+     * @see \Dphp\Commons\Properties
      */
     protected function buildLanguageData() {
         $config = $this->getConfig ();
         $baseDirectory = isset ( $config [self::CONF_BASE_DIRECTORY] ) ? $config [self::CONF_BASE_DIRECTORY] : '';
-        $langDir = new Ddth_Commons_File ( $baseDirectory );
+        $i18nDir = new File ( $baseDirectory );
         $location = isset ( $config [self::CONF_LOCATION] ) ? $config [self::CONF_LOCATION] : '';
-        $langDir = new Ddth_Commons_File ( $location, $baseDirectory );
-        if (! $langDir->isDirectory ()) {
-            $msg = "[{$langDir->getPathname()}] is not a directory!";
-            throw new Ddth_Mls_MlsException ( $msg );
+        $i18nDir = new File ( $location, $baseDirectory );
+        if (! $i18nDir->isDirectory ()) {
+            $msg = "[{$i18nDir->getPathname()}] is not a directory!";
+            throw new I18nException ( $msg );
         }
-        $languageData = new Ddth_Commons_Properties ();
-        $dh = @opendir ( $langDir->getPathname () );
+        $languageData = new Properties ();
+        $dh = @opendir ( $i18nDir->getPathname () );
         if ($dh) {
             $file = @readdir ( $dh );
             while ( $file ) {
-                $langFile = new Ddth_Commons_File ( $file, $langDir );
+                $langFile = new File ( $file, $i18nDir );
                 if ($langFile->isFile () && $langFile->isReadable () && preg_match ( '/^.+\.properties$/i', $file )) {
                     try {
-                        $msg = "Load language file [{$langFile->getPathname()}]...";
-                        $this->LOGGER->info ( $msg );
+                        // $msg = "Load language file [{$langFile->getPathname()}]...";
+                        // $this->LOGGER->info ( $msg );
                         $languageData->load ( $langFile->getPathname () );
                     } catch ( Exception $e ) {
-                        $msg = $e->getMessage ();
-                        $this->LOGGER->warn ( $msg, $e );
+                        // $msg = $e->getMessage ();
+                        // $this->LOGGER->warn ( $msg, $e );
                     }
                 }
                 $file = @readdir ( $dh );
             }
             @closedir ( $dh );
         } else {
-            $msg = "[{$langDir->getPathname()}] is not accessible!";
-            throw new Ddth_Mls_MlsException ( $msg );
+            $msg = "[{$i18nDir->getPathname()}] is not accessible!";
+            throw new I18nException ( $msg );
         }
         $this->setLanguageData ( $languageData->toArray () );
     }

@@ -5,7 +5,7 @@ An i18n library by dPHP.
 
 HISTORY
 -------
-* v0.1.0 - 2013-11-07: under development.
+* v0.1.0 - 2013-11-08: first release.
 
 
 COPYRIGHT

@@ -171,8 +171,8 @@ abstract class AbstractI18n implements I18n {
      *
      * @see I18n::init()
      */
-    public function init($langName, $config) {
-        $this->setName ( $langName );
+    public function init($name, $config = Array()) {
+        $this->setName ( $name );
         $this->config = $config;
         $this->setDisplayName ( isset ( $config [self::CONF_DISPLAY_NAME] ) ? $config [self::CONF_DISPLAY_NAME] : NULL );
         $this->setDescription ( isset ( $config [self::CONF_DESCRIPTION] ) ? $config [self::CONF_DESCRIPTION] : NULL );
